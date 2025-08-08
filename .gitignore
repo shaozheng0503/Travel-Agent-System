@@ -7,7 +7,7 @@
 *.mkv
 
 # 图片文件（如果太大）
-*.png
+# *.png
 *.jpg
 *.jpeg
 *.gif

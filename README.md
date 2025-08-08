@@ -60,13 +60,13 @@
 
 ### 🎯 核心特性
 
-- 🤖 **AI智能对话**: 基于GPT-4的自然语言交互
-- 🗺️ **智能路线规划**: 集成高德地图API的多点路线优化
-- 🏨 **个性化推荐**: 基于用户偏好的景点、酒店推荐
-- 💰 **预算管理**: 智能费用估算和预算分析
-- 🌤️ **实时信息**: 天气、交通、路况等实时数据
-- 📱 **响应式设计**: 支持PC、平板、手机多端访问
-- 🔄 **多轮对话**: 上下文理解和连续对话支持
+- 🤖 **AI智能对话**: 基于GPT-4的自然语言交互，支持多轮对话和上下文理解
+- 🗺️ **智能路线规划**: 集成高德地图API的多点路线优化，支持多种出行方式
+- 🏨 **个性化推荐**: 基于用户偏好的景点、酒店推荐，智能匹配用户需求
+- 💰 **预算管理**: 智能费用估算和预算分析，实时跟踪消费情况
+- 🌤️ **实时信息**: 天气、交通、路况等实时数据，为出行提供决策支持
+- 📱 **响应式设计**: 支持PC、平板、手机多端访问，提供一致的用户体验
+- 🔄 **多轮对话**: 上下文理解和连续对话支持，自然流畅的交互体验
 
 ### 🏗️ 技术架构
 
@@ -79,6 +79,64 @@ API网关 (Nginx + Express)
     ↓
 数据层 (MongoDB + Redis)
 ```
+
+## 📁 项目结构
+
+```
+智能旅游Agent系统/
+├── 📄 README.md                    # 项目主文档
+├── 📄 .gitignore                   # Git忽略文件配置
+├── 📄 01_系统架构设计.md            # 系统架构设计文档
+├── 📄 02_功能模块设计.md            # 功能模块设计文档
+├── 📄 03_数据库设计.md              # 数据库设计文档
+├── 📄 04_部署实施指南.md            # 部署实施指南
+├── 📄 旅游Agent搭建规划.md          # 项目整体规划文档
+├── 📄 13_资深旅行策划AI助手.md      # AI助手设计文档
+├── 📄 14_旅行规划表设计专家.md      # 规划表设计文档
+├── 📄 教程汇总.md                   # 教程汇总文档
+├── 📸 演示图片/                     # 应用界面演示图片
+│   ├── 1.png - 16.png             # 16张应用界面截图
+├── 🗂️ 一个旅游规划的对比/           # 不同AI助手对比分析
+│   ├── deepseek.md                # DeepSeek对比
+│   ├── kimi.md                    # Kimi对比
+│   ├── 元宝.md                    # 元宝对比
+│   ├── 豆包.md                    # 豆包对比
+│   └── 魔搭                       # 魔搭对比
+├── 🗂️ 原型图文件夹/                # 应用原型设计
+│   ├── README.md                  # 原型说明
+│   ├── index.html                 # 主页面原型
+│   ├── chat.html                  # 对话页面原型
+│   ├── map.html                   # 地图页面原型
+│   ├── planning.html              # 规划页面原型
+│   ├── budget.html                # 预算页面原型
+│   ├── profile.html               # 个人中心原型
+│   ├── settings.html              # 设置页面原型
+│   ├── recommendations.html       # 推荐页面原型
+│   └── advanced-features.html     # 高级功能原型
+└── 🗂️ 高德地图旅游规划应用/         # 基于高德地图的旅游规划工具
+    ├── 📄 README.md               # 应用说明文档
+    ├── 📄 package.json            # 项目配置文件
+    ├── 📄 index.html              # 主页面
+    ├── 📄 app.js                  # 主要JavaScript逻辑
+    ├── 📄 styles.css              # 样式文件
+    ├── 📄 advanced-tools.html     # 高级工具页面
+    ├── 📄 advanced-tools.js       # 高级工具逻辑
+    ├── 📄 launcher.html           # 启动页面
+    ├── 📄 test.html               # 测试页面
+    ├── 📄 start.py                # Python启动脚本
+    ├── 📄 start.bat               # Windows启动脚本
+    ├── 📄 start-simple.bat        # 简化启动脚本
+    └── 📄 启动说明.txt             # 启动说明文档
+```
+
+### 📊 技术栈分布
+
+根据GitHub统计，项目主要使用以下技术：
+
+- **HTML**: 81.8% - 前端页面结构
+- **JavaScript**: 15.2% - 前端交互逻辑和后端API
+- **CSS**: 2.2% - 样式和界面设计
+- **其他**: 0.8% - 配置文件和文档
 
 ## 📚 文档导航
 
@@ -125,8 +183,8 @@ API网关 (Nginx + Express)
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/your-username/travel-agent.git
-cd travel-agent
+git clone https://github.com/shaozheng0503/Travel-Agent-System.git
+cd Travel-Agent-System
 
 # 2. 配置环境变量
 cp .env.example .env
@@ -154,6 +212,22 @@ cd backend && npm run dev  # 后端
 
 # 3. 启动数据库
 docker-compose up mongo redis -d
+```
+
+### 高德地图应用快速启动
+
+```bash
+# 进入高德地图应用目录
+cd 高德地图旅游规划应用
+
+# 使用Python启动（推荐）
+python start.py
+
+# 或使用批处理文件启动
+start.bat
+
+# 或使用简化启动脚本
+start-simple.bat
 ```
 
 ## 🔧 配置说明
@@ -286,7 +360,7 @@ npm run test:coverage
 - 📧 邮箱: support@travel-agent.com
 - 💬 微信群: 扫描二维码加入
 - 📖 文档: [完整文档](docs/)
-- 🐛 问题反馈: [GitHub Issues](https://github.com/your-username/travel-agent/issues)
+- 🐛 问题反馈: [GitHub Issues](https://github.com/shaozheng0503/Travel-Agent-System/issues)
 
 ## 🗺️ 项目路线图
 
@@ -300,6 +374,7 @@ npm run test:coverage
 - [x] 前端界面
 - [x] 数据库设计
 - [x] 部署方案
+- [x] 高德地图集成应用
 
 ### 进行中 🔄
 
