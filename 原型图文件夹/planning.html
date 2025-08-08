@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行程规划</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .status-bar {
+            height: 44px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .bottom-nav {
+            height: 83px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        .nav-item.active {
+            color: #667eea;
+        }
+        .trip-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        .day-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar flex items-center justify-between px-6 text-white text-sm">
+        <div class="flex items-center space-x-1">
+            <span>9:41</span>
+        </div>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <i class="fas fa-battery-three-quarters text-xs"></i>
+        </div>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="flex-1 px-6 py-4 space-y-6">
+        <!-- 头部 -->
+        <div class="flex items-center justify-between">
+            <h1 class="text-2xl font-bold text-gray-800">行程规划</h1>
+            <button class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        <!-- 当前行程 -->
+        <div class="trip-card p-6 text-white">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold">北京3日游</h3>
+                <span class="text-sm opacity-90">进行中</span>
+            </div>
+            <div class="flex items-center space-x-4 mb-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-calendar"></i>
+                    <span class="text-sm">2024.12.15 - 12.17</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-users"></i>
+                    <span class="text-sm">2人</span>
+                </div>
+            </div>
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm opacity-90">预算</p>
+                    <p class="text-xl font-bold">¥3000</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm opacity-90">已花费</p>
+                    <p class="text-xl font-bold">¥2100</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 行程详情 -->
+        <div class="bg-white rounded-2xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">行程详情</h3>
+            
+            <!-- 第1天 -->
+            <div class="day-card p-4 mb-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-semibold text-gray-800">第1天 - 12月15日</h4>
+                    <span class="text-sm text-blue-600">今天</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                        <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-landmark text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-medium text-gray-800">天安门广场</h5>
+                            <p class="text-sm text-gray-600">09:00 - 10:30</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-green-600">免费</p>
+                            <p class="text-xs text-gray-500">已完成</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                        <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-palace text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-medium text-gray-800">故宫博物院</h5>
+                            <p class="text-sm text-gray-600">11:00 - 15:00</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-green-600">¥60</p>
+                            <p class="text-xs text-blue-600">进行中</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                        <div class="w-10 h-10 bg-gray-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-mountain text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-medium text-gray-800">景山公园</h5>
+                            <p class="text-sm text-gray-600">15:30 - 17:00</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-green-600">¥10</p>
+                            <p class="text-xs text-gray-500">待进行</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第2天 -->
+            <div class="day-card p-4 mb-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-semibold text-gray-800">第2天 - 12月16日</h4>
+                    <span class="text-sm text-gray-500">明天</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                        <div class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-mountain text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-medium text-gray-800">八达岭长城</h5>
+                            <p class="text-sm text-gray-600">08:00 - 12:00</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-green-600">¥120</p>
+                            <p class="text-xs text-gray-500">待进行</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                        <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-water text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-medium text-gray-800">颐和园</h5>
+                            <p class="text-sm text-gray-600">14:00 - 17:30</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-green-600">¥60</p>
+                            <p class="text-xs text-gray-500">待进行</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第3天 -->
+            <div class="day-card p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-semibold text-gray-800">第3天 - 12月17日</h4>
+                    <span class="text-sm text-gray-500">后天</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                        <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-temple-buddhist text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-medium text-gray-800">天坛公园</h5>
+                            <p class="text-sm text-gray-600">08:30 - 11:00</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-green-600">¥35</p>
+                            <p class="text-xs text-gray-500">待进行</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                        <div class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-store text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h5 class="font-medium text-gray-800">南锣鼓巷</h5>
+                            <p class="text-sm text-gray-600">14:00 - 16:00</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-sm text-green-600">免费</p>
+                            <p class="text-xs text-gray-500">待进行</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                       <!-- 快速操作 -->
+               <div class="grid grid-cols-2 gap-4">
+                   <button class="bg-white p-4 rounded-2xl shadow-lg text-center transform hover:scale-105 transition-all duration-300 cursor-pointer hover:shadow-xl">
+                       <div class="text-2xl text-blue-500 mb-2 animate-pulse">
+                           <i class="fas fa-edit"></i>
+                       </div>
+                       <p class="text-sm font-medium text-gray-800">编辑行程</p>
+                       <p class="text-xs text-gray-500 mt-1">修改安排</p>
+                   </button>
+                   <button class="bg-white p-4 rounded-2xl shadow-lg text-center transform hover:scale-105 transition-all duration-300 cursor-pointer hover:shadow-xl">
+                       <div class="text-2xl text-green-500 mb-2 animate-bounce">
+                           <i class="fas fa-share"></i>
+                       </div>
+                       <p class="text-sm font-medium text-gray-800">分享行程</p>
+                       <p class="text-xs text-gray-500 mt-1">发送给朋友</p>
+                   </button>
+               </div>
+
+        <!-- 预算统计 -->
+        <div class="bg-white rounded-2xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">预算统计</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-ticket-alt text-white text-sm"></i>
+                        </div>
+                        <span class="text-gray-700">门票费用</span>
+                    </div>
+                    <span class="font-semibold text-gray-800">¥285</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-bed text-white text-sm"></i>
+                        </div>
+                        <span class="text-gray-700">住宿费用</span>
+                    </div>
+                    <span class="font-semibold text-gray-800">¥800</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-utensils text-white text-sm"></i>
+                        </div>
+                        <span class="text-gray-700">餐饮费用</span>
+                    </div>
+                    <span class="font-semibold text-gray-800">¥600</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-bus text-white text-sm"></i>
+                        </div>
+                        <span class="text-gray-700">交通费用</span>
+                    </div>
+                    <span class="font-semibold text-gray-800">¥300</span>
+                </div>
+                <div class="border-t pt-4">
+                    <div class="flex items-center justify-between">
+                        <span class="font-semibold text-gray-800">总计</span>
+                        <span class="text-xl font-bold text-blue-600">¥1985</span>
+                    </div>
+                    <div class="flex items-center justify-between mt-2">
+                        <span class="text-sm text-gray-600">剩余预算</span>
+                        <span class="text-lg font-semibold text-green-600">¥1015</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav flex items-center justify-around px-6">
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-home text-xl mb-1"></i>
+            <span class="text-xs">首页</span>
+        </div>
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-comments text-xl mb-1"></i>
+            <span class="text-xs">对话</span>
+        </div>
+        <div class="nav-item active flex flex-col items-center">
+            <i class="fas fa-map text-xl mb-1"></i>
+            <span class="text-xs">地图</span>
+        </div>
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-user text-xl mb-1"></i>
+            <span class="text-xs">我的</span>
+        </div>
+    </div>
+</body>
+</html> 

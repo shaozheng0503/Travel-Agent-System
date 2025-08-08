@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI对话</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .status-bar {
+            height: 44px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .chat-container {
+            height: calc(100vh - 44px - 80px);
+            overflow-y: auto;
+        }
+        .message-bubble {
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px 20px 5px 20px;
+        }
+        .ai-message {
+            background: #f3f4f6;
+            color: #374151;
+            border-radius: 20px 20px 20px 5px;
+        }
+        .input-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #9ca3af;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar flex items-center justify-between px-6 text-white text-sm">
+        <div class="flex items-center space-x-1">
+            <span>9:41</span>
+        </div>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <i class="fas fa-battery-three-quarters text-xs"></i>
+        </div>
+    </div>
+
+    <!-- 聊天头部 -->
+    <div class="bg-white px-6 py-4 border-b border-gray-200">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <i class="fas fa-robot text-white"></i>
+            </div>
+            <div>
+                <h2 class="font-semibold text-gray-800">AI旅行助手</h2>
+                <p class="text-sm text-green-600">在线 • 智能规划专家</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 聊天内容区域 -->
+    <div class="chat-container px-6 py-4 space-y-4">
+        <!-- AI欢迎消息 -->
+        <div class="flex justify-start">
+            <div class="message-bubble ai-message p-4">
+                <div class="flex items-start space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm">你好！我是你的专属旅行助手 🤖</p>
+                        <p class="text-sm mt-2">我可以帮你：</p>
+                        <ul class="text-sm mt-1 space-y-1">
+                            <li>• 规划个性化行程</li>
+                            <li>• 推荐热门景点</li>
+                            <li>• 提供路线建议</li>
+                            <li>• 估算旅行预算</li>
+                        </ul>
+                        <p class="text-sm mt-2">告诉我你想去哪里，我来为你制定完美的旅行计划！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 用户消息 -->
+        <div class="flex justify-end">
+            <div class="message-bubble user-message p-4">
+                <p class="text-sm">我想去北京旅游3天，预算3000元，有什么建议吗？</p>
+            </div>
+        </div>
+
+        <!-- AI回复 -->
+        <div class="flex justify-start">
+            <div class="message-bubble ai-message p-4">
+                <div class="flex items-start space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm">太棒了！北京3日游是个很好的选择。根据你的预算，我为你推荐以下行程：</p>
+                        
+                        <div class="mt-3 bg-white rounded-lg p-3 border border-gray-200">
+                            <h4 class="font-semibold text-gray-800 mb-2">📅 推荐行程</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-blue-500">第1天</span>
+                                    <span>天安门广场 → 故宫博物院 → 景山公园</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-blue-500">第2天</span>
+                                    <span>八达岭长城 → 颐和园</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-blue-500">第3天</span>
+                                    <span>天坛公园 → 南锣鼓巷 → 什刹海</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3 bg-white rounded-lg p-3 border border-gray-200">
+                            <h4 class="font-semibold text-gray-800 mb-2">💰 预算分配</h4>
+                            <div class="space-y-1 text-sm">
+                                <div class="flex justify-between">
+                                    <span>住宿（2晚）</span>
+                                    <span class="text-green-600">¥800</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>门票</span>
+                                    <span class="text-green-600">¥400</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>餐饮</span>
+                                    <span class="text-green-600">¥600</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>交通</span>
+                                    <span class="text-green-600">¥300</span>
+                                </div>
+                                <div class="flex justify-between font-semibold border-t pt-1">
+                                    <span>总计</span>
+                                    <span class="text-blue-600">¥2100</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-sm mt-3">这个行程既经典又经济，还有900元可以用于购物和应急。需要我为你详细规划某个景点吗？</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 用户消息 -->
+        <div class="flex justify-end">
+            <div class="message-bubble user-message p-4">
+                <p class="text-sm">故宫需要提前预约吗？</p>
+            </div>
+        </div>
+
+        <!-- AI回复 -->
+        <div class="flex justify-start">
+            <div class="message-bubble ai-message p-4">
+                <div class="flex items-start space-x-2">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white text-sm"></i>
+                    </div>
+                    <div>
+                        <p class="text-sm">是的！故宫需要提前预约，建议提前3-7天预约。</p>
+                        
+                        <div class="mt-3 bg-yellow-50 rounded-lg p-3 border border-yellow-200">
+                            <h4 class="font-semibold text-yellow-800 mb-2">⚠️ 重要提醒</h4>
+                            <ul class="text-sm text-yellow-700 space-y-1">
+                                <li>• 故宫每日限流8万人</li>
+                                <li>• 需要身份证实名预约</li>
+                                <li>• 建议上午参观，人少景美</li>
+                                <li>• 周一闭馆（法定节假日除外）</li>
+                            </ul>
+                        </div>
+
+                        <div class="mt-3 bg-blue-50 rounded-lg p-3 border border-blue-200">
+                            <h4 class="font-semibold text-blue-800 mb-2">🎫 预约方式</h4>
+                            <div class="text-sm text-blue-700 space-y-1">
+                                <p>• 官网：gugong.ktmtech.cn</p>
+                                <p>• 微信小程序：故宫博物院</p>
+                                <p>• 门票价格：¥60/人</p>
+                            </div>
+                        </div>
+
+                        <p class="text-sm mt-3">我可以帮你设置预约提醒，或者推荐其他时间段的替代方案！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+                       <!-- 快速回复按钮 -->
+               <div class="flex flex-wrap gap-2">
+                   <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 cursor-pointer">
+                       🏨 推荐酒店
+                   </button>
+                   <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 cursor-pointer">
+                       🍜 美食推荐
+                   </button>
+                   <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 cursor-pointer">
+                       🚇 交通攻略
+                   </button>
+                   <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 cursor-pointer">
+                       📸 拍照打卡
+                   </button>
+                   <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm hover:bg-gray-200 transition-all duration-300 transform hover:scale-105 cursor-pointer">
+                       🎫 门票预订
+                   </button>
+               </div>
+    </div>
+
+    <!-- 输入区域 -->
+    <div class="input-container px-6 py-4">
+        <div class="flex items-center space-x-3">
+            <button class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500">
+                <i class="fas fa-plus"></i>
+            </button>
+            <div class="flex-1 bg-gray-100 rounded-full px-4 py-2">
+                <input type="text" placeholder="输入你的问题..." class="w-full bg-transparent outline-none text-gray-700">
+            </div>
+            <button class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+</body>
+</html> 

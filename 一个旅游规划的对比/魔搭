@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "amap-maps": {
+      "type": "sse",
+      "url": "https://mcp.api-inference.modelscope.net/d407b410762249/sse"
+    }
+  }
+}

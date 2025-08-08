@@ -1,0 +1,44 @@
+{
+  "name": "amap-travel-planner",
+  "version": "1.0.0",
+  "description": "智能旅游规划助手 - 基于高德地图API的综合性旅游规划工具",
+  "main": "index.html",
+  "scripts": {
+    "start": "http-server -p 8000 -o",
+    "dev": "http-server -p 8000 -o -c-1",
+    "build": "echo 'No build process needed for this project'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "amap",
+    "travel",
+    "planner",
+    "map",
+    "navigation",
+    "weather",
+    "poi",
+    "geocoding",
+    "route-planning"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/amap-travel-planner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/amap-travel-planner/issues"
+  },
+  "homepage": "https://github.com/yourusername/amap-travel-planner#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+} 

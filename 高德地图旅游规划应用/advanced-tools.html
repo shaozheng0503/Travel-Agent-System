@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高级工具 - 智能旅游规划助手</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=ce54301973a263c142c2e5aa8b19ebee&plugin=AMap.Geocoder,AMap.Driving,AMap.Walking,AMap.Transit,AMap.Weather,AMap.PlaceSearch,AMap.Autocomplete,AMap.Polyline,AMap.Polygon"></script>
+    <style>
+        .advanced-tools {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .tool-card h3 {
+            color: #4a5568;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .coordinate-input {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .track-input {
+            width: 100%;
+            height: 100px;
+            resize: vertical;
+            margin-bottom: 15px;
+        }
+        
+        .result-display {
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: #f7fafc;
+            border-radius: 8px;
+            padding: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 10px 15px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tab-panel {
+            display: none;
+        }
+        
+        .tab-panel.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔧 高级工具 - 智能旅游规划助手</h1>
+            <p>坐标转换、轨迹纠偏、高级搜索等专业功能</p>
+            <a href="index.html" class="btn" style="margin-top: 10px;">← 返回主页面</a>
+        </header>
+
+        <div class="advanced-tools">
+            <!-- 坐标转换工具 -->
+            <div class="tool-card">
+                <h3>🔄 坐标转换</h3>
+                <div class="nav-tabs">
+                    <button class="nav-tab active" onclick="showToolTab('coordinate', 'gps')">GPS转高德</button>
+                    <button class="nav-tab" onclick="showToolTab('coordinate', 'baidu')">百度转高德</button>
+                    <button class="nav-tab" onclick="showToolTab('coordinate', 'google')">谷歌转高德</button>
+                </div>
+                
+                <div id="coordinate-gps" class="tab-panel active">
+                    <div class="coordinate-input">
+                        <input type="number" id="gps-lng" placeholder="GPS经度" step="any" class="input-field">
+                        <input type="number" id="gps-lat" placeholder="GPS纬度" step="any" class="input-field">
+                    </div>
+                    <button onclick="convertGPS()" class="btn primary">转换坐标</button>
+                    <div id="coordinate-result" class="result-display"></div>
+                </div>
+                
+                <div id="coordinate-baidu" class="tab-panel">
+                    <div class="coordinate-input">
+                        <input type="number" id="baidu-lng" placeholder="百度经度" step="any" class="input-field">
+                        <input type="number" id="baidu-lat" placeholder="百度纬度" step="any" class="input-field">
+                    </div>
+                    <button onclick="convertBaidu()" class="btn primary">转换坐标</button>
+                    <div id="baidu-result" class="result-display"></div>
+                </div>
+                
+                <div id="coordinate-google" class="tab-panel">
+                    <div class="coordinate-input">
+                        <input type="number" id="google-lng" placeholder="谷歌经度" step="any" class="input-field">
+                        <input type="number" id="google-lat" placeholder="谷歌纬度" step="any" class="input-field">
+                    </div>
+                    <button onclick="convertGoogle()" class="btn primary">转换坐标</button>
+                    <div id="google-result" class="result-display"></div>
+                </div>
+            </div>
+
+            <!-- 轨迹纠偏工具 -->
+            <div class="tool-card">
+                <h3>🎯 轨迹纠偏</h3>
+                <p style="color: #718096; font-size: 14px; margin-bottom: 15px;">
+                    输入GPS轨迹坐标，系统将自动进行道路匹配和纠偏
+                </p>
+                <textarea id="track-coordinates" class="track-input" placeholder="请输入GPS轨迹坐标，格式：经度,纬度&#10;例如：&#10;116.397428,39.90923&#10;116.397500,39.90930&#10;116.397600,39.90940"></textarea>
+                <button onclick="correctTrack()" class="btn primary">轨迹纠偏</button>
+                <div id="track-result" class="result-display"></div>
+            </div>
+
+            <!-- 高级POI搜索 -->
+            <div class="tool-card">
+                <h3>🔍 高级POI搜索</h3>
+                <input type="text" id="advanced-keyword" placeholder="搜索关键词" class="input-field">
+                <select id="advanced-type" class="select-field">
+                    <option value="">所有类型</option>
+                    <option value="餐饮服务">餐饮服务</option>
+                    <option value="住宿服务">住宿服务</option>
+                    <option value="购物服务">购物服务</option>
+                    <option value="生活服务">生活服务</option>
+                    <option value="风景名胜">风景名胜</option>
+                    <option value="交通设施">交通设施</option>
+                    <option value="商务住宅">商务住宅</option>
+                    <option value="政府机构">政府机构</option>
+                    <option value="科教文化">科教文化</option>
+                    <option value="医疗保健">医疗保健</option>
+                </select>
+                <div class="coordinate-input">
+                    <input type="number" id="search-lng" placeholder="中心点经度" step="any" class="input-field">
+                    <input type="number" id="search-lat" placeholder="中心点纬度" step="any" class="input-field">
+                </div>
+                <input type="number" id="search-radius" placeholder="搜索半径(米)" value="5000" class="input-field">
+                <button onclick="advancedPOISearch()" class="btn primary">高级搜索</button>
+                <div id="advanced-poi-result" class="result-display"></div>
+            </div>
+
+            <!-- 地理围栏工具 -->
+            <div class="tool-card">
+                <h3>🚧 地理围栏</h3>
+                <p style="color: #718096; font-size: 14px; margin-bottom: 15px;">
+                    创建虚拟围栏，检测点是否在指定区域内
+                </p>
+                <textarea id="fence-coordinates" class="track-input" placeholder="请输入围栏边界坐标，格式：经度,纬度&#10;例如：&#10;116.397428,39.90923&#10;116.397500,39.90930&#10;116.397600,39.90940&#10;116.397428,39.90923"></textarea>
+                <div class="coordinate-input">
+                    <input type="number" id="test-lng" placeholder="测试点经度" step="any" class="input-field">
+                    <input type="number" id="test-lat" placeholder="测试点纬度" step="any" class="input-field">
+                </div>
+                <button onclick="checkFence()" class="btn primary">检测围栏</button>
+                <div id="fence-result" class="result-display"></div>
+            </div>
+
+            <!-- 路径优化工具 -->
+            <div class="tool-card">
+                <h3>🚀 路径优化</h3>
+                <p style="color: #718096; font-size: 14px; margin-bottom: 15px;">
+                    多点路径规划，自动优化访问顺序
+                </p>
+                <textarea id="waypoints" class="track-input" placeholder="请输入途经点坐标，每行一个：经度,纬度,名称&#10;例如：&#10;116.397428,39.90923,天安门&#10;116.397500,39.90930,故宫&#10;116.397600,39.90940,景山公园"></textarea>
+                <select id="optimize-type" class="select-field">
+                    <option value="distance">最短距离</option>
+                    <option value="time">最短时间</option>
+                </select>
+                <button onclick="optimizeRoute()" class="btn primary">路径优化</button>
+                <div id="optimize-result" class="result-display"></div>
+            </div>
+
+            <!-- 数据可视化工具 -->
+            <div class="tool-card">
+                <h3>📊 数据可视化</h3>
+                <p style="color: #718096; font-size: 14px; margin-bottom: 15px;">
+                    将地理数据转换为可视化图表
+                </p>
+                <textarea id="visual-data" class="track-input" placeholder="请输入要可视化的数据，格式：名称,经度,纬度,数值&#10;例如：&#10;北京,116.397428,39.90923,100&#10;上海,121.473701,31.230416,80&#10;广州,113.264435,23.129163,60"></textarea>
+                <select id="visual-type" class="select-field">
+                    <option value="heatmap">热力图</option>
+                    <option value="marker">标记点</option>
+                    <option value="cluster">聚合点</option>
+                </select>
+                <button onclick="visualizeData()" class="btn primary">生成可视化</button>
+                <div id="visual-result" class="result-display"></div>
+            </div>
+        </div>
+
+        <!-- 地图显示区域 -->
+        <div style="margin-top: 30px;">
+            <div id="advanced-map" style="height: 500px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);"></div>
+        </div>
+    </div>
+
+    <script src="advanced-tools.js"></script>
+</body>
+</html> 

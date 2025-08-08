@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能旅游规划助手 - 基于高德地图API</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=ce54301973a263c142c2e5aa8b19ebee&plugin=AMap.Geocoder,AMap.Driving,AMap.Walking,AMap.Transit,AMap.Weather,AMap.PlaceSearch,AMap.Autocomplete"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌍 智能旅游规划助手</h1>
+            <p>基于高德地图API的综合性旅游规划工具</p>
+            <a href="advanced-tools.html" class="btn" style="margin-top: 10px;">🔧 高级工具</a>
+        </header>
+
+        <div class="main-content">
+            <!-- 左侧控制面板 -->
+            <div class="control-panel">
+                <div class="section">
+                    <h3>📍 起点设置</h3>
+                    <input type="text" id="startPoint" placeholder="输入起点地址" class="input-field">
+                    <button id="startBtn" class="btn">定位起点</button>
+                </div>
+
+                <div class="section">
+                    <h3>🎯 终点设置</h3>
+                    <input type="text" id="endPoint" placeholder="输入终点地址" class="input-field">
+                    <button id="endBtn" class="btn">定位终点</button>
+                </div>
+
+                <div class="section">
+                    <h3>🚗 路线规划</h3>
+                    <select id="routeType" class="select-field">
+                        <option value="driving">驾车</option>
+                        <option value="walking">步行</option>
+                        <option value="transit">公交</option>
+                    </select>
+                    <button id="routeBtn" class="btn primary">规划路线</button>
+                </div>
+
+                <div class="section">
+                    <h3>🔍 周边搜索</h3>
+                    <input type="text" id="poiKeyword" placeholder="搜索关键词(如:餐厅、酒店)" class="input-field">
+                    <select id="poiType" class="select-field">
+                        <option value="">所有类型</option>
+                        <option value="餐饮服务">餐饮服务</option>
+                        <option value="住宿服务">住宿服务</option>
+                        <option value="购物服务">购物服务</option>
+                        <option value="生活服务">生活服务</option>
+                        <option value="风景名胜">风景名胜</option>
+                        <option value="交通设施">交通设施</option>
+                    </select>
+                    <button id="poiBtn" class="btn">搜索POI</button>
+                </div>
+
+                <div class="section">
+                    <h3>🌤️ 天气查询</h3>
+                    <input type="text" id="weatherCity" placeholder="输入城市名称" class="input-field">
+                    <button id="weatherBtn" class="btn">查询天气</button>
+                </div>
+
+                <div class="section">
+                    <h3>🗺️ 行政区域</h3>
+                    <input type="text" id="districtName" placeholder="输入地区名称" class="input-field">
+                    <button id="districtBtn" class="btn">查询区域</button>
+                </div>
+
+                <div class="section">
+                    <h3>🚦 交通信息</h3>
+                    <button id="trafficBtn" class="btn">获取路况</button>
+                    <button id="busBtn" class="btn">公交信息</button>
+                </div>
+
+                <div class="section">
+                    <h3>📍 IP定位</h3>
+                    <button id="ipBtn" class="btn">定位当前位置</button>
+                </div>
+            </div>
+
+            <!-- 右侧地图和结果显示区域 -->
+            <div class="map-container">
+                <div id="map" class="map"></div>
+                
+                <div class="results-panel">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="route">路线信息</button>
+                        <button class="tab-btn" data-tab="poi">POI结果</button>
+                        <button class="tab-btn" data-tab="weather">天气信息</button>
+                        <button class="tab-btn" data-tab="traffic">交通信息</button>
+                    </div>
+                    
+                    <div id="route-tab" class="tab-content active">
+                        <h4>🚗 路线规划结果</h4>
+                        <div id="routeInfo"></div>
+                    </div>
+                    
+                    <div id="poi-tab" class="tab-content">
+                        <h4>🔍 POI搜索结果</h4>
+                        <div id="poiResults"></div>
+                    </div>
+                    
+                    <div id="weather-tab" class="tab-content">
+                        <h4>🌤️ 天气信息</h4>
+                        <div id="weatherInfo"></div>
+                    </div>
+                    
+                    <div id="traffic-tab" class="tab-content">
+                        <h4>🚦 交通信息</h4>
+                        <div id="trafficInfo"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 调试信息 -->
+    <div id="debug" style="position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8); color: white; padding: 10px; border-radius: 5px; font-size: 12px; max-width: 300px; display: none;">
+        <div id="debugInfo"></div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // 简单的调试和事件绑定
+        console.log('页面加载完成');
+        
+        // 显示调试信息
+        function showDebug(message) {
+            const debug = document.getElementById('debug');
+            const debugInfo = document.getElementById('debugInfo');
+            debug.style.display = 'block';
+            debugInfo.innerHTML = message;
+            console.log(message);
+        }
+        
+        // 检查函数是否存在
+        function checkFunction(funcName) {
+            if (typeof window[funcName] === 'function') {
+                showDebug(`✅ 函数 ${funcName} 已加载`);
+                return true;
+            } else {
+                showDebug(`❌ 函数 ${funcName} 未找到`);
+                return false;
+            }
+        }
+        
+        // 页面加载完成后检查
+        document.addEventListener('DOMContentLoaded', function() {
+            showDebug('页面DOM加载完成');
+            
+            // 检查关键函数
+            setTimeout(() => {
+                checkFunction('geocodeAddress');
+                checkFunction('planRoute');
+                checkFunction('searchPOI');
+                checkFunction('getWeather');
+            }, 1000);
+        });
+        
+        // 绑定按钮事件
+        document.addEventListener('DOMContentLoaded', function() {
+            // 起点定位
+            document.getElementById('startBtn').addEventListener('click', function() {
+                showDebug('点击了起点定位按钮');
+                if (typeof geocodeAddress === 'function') {
+                    geocodeAddress('start');
+                } else {
+                    showDebug('geocodeAddress函数未定义');
+                }
+            });
+            
+            // 终点定位
+            document.getElementById('endBtn').addEventListener('click', function() {
+                showDebug('点击了终点定位按钮');
+                if (typeof geocodeAddress === 'function') {
+                    geocodeAddress('end');
+                } else {
+                    showDebug('geocodeAddress函数未定义');
+                }
+            });
+            
+            // 路线规划
+            document.getElementById('routeBtn').addEventListener('click', function() {
+                showDebug('点击了路线规划按钮');
+                if (typeof planRoute === 'function') {
+                    planRoute();
+                } else {
+                    showDebug('planRoute函数未定义');
+                }
+            });
+            
+            // POI搜索
+            document.getElementById('poiBtn').addEventListener('click', function() {
+                showDebug('点击了POI搜索按钮');
+                if (typeof searchPOI === 'function') {
+                    searchPOI();
+                } else {
+                    showDebug('searchPOI函数未定义');
+                }
+            });
+            
+            // 天气查询
+            document.getElementById('weatherBtn').addEventListener('click', function() {
+                showDebug('点击了天气查询按钮');
+                if (typeof getWeather === 'function') {
+                    getWeather();
+                } else {
+                    showDebug('getWeather函数未定义');
+                }
+            });
+            
+            // 标签页切换
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    showDebug(`切换到标签页: ${tabName}`);
+                    showTab(tabName);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高级功能</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .status-bar {
+            height: 44px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .bottom-nav {
+            height: 83px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        .nav-item.active {
+            color: #667eea;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+        }
+        .ar-overlay {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+            backdrop-filter: blur(20px);
+        }
+        .voice-wave {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+        }
+        .voice-bar {
+            width: 3px;
+            background: #667eea;
+            border-radius: 2px;
+            animation: voiceWave 1.5s infinite ease-in-out;
+        }
+        .voice-bar:nth-child(1) { animation-delay: 0s; height: 20px; }
+        .voice-bar:nth-child(2) { animation-delay: 0.1s; height: 30px; }
+        .voice-bar:nth-child(3) { animation-delay: 0.2s; height: 25px; }
+        .voice-bar:nth-child(4) { animation-delay: 0.3s; height: 35px; }
+        .voice-bar:nth-child(5) { animation-delay: 0.4s; height: 20px; }
+        @keyframes voiceWave {
+            0%, 100% { transform: scaleY(0.5); opacity: 0.5; }
+            50% { transform: scaleY(1); opacity: 1; }
+        }
+        .pulse-ring {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar flex items-center justify-between px-6 text-white text-sm">
+        <div class="flex items-center space-x-1">
+            <span>9:41</span>
+        </div>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <i class="fas fa-battery-three-quarters text-xs"></i>
+        </div>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="flex-1 px-6 py-4 space-y-6">
+        <!-- 头部 -->
+        <div class="flex items-center justify-between">
+            <h1 class="text-2xl font-bold text-gray-800">高级功能</h1>
+            <button class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white">
+                <i class="fas fa-cog"></i>
+            </button>
+        </div>
+
+        <!-- AR导航 -->
+        <div class="feature-card">
+            <div class="relative h-64 bg-gradient-to-br from-blue-100 to-purple-100">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=200&fit=crop&crop=center" 
+                     alt="AR导航" class="w-full h-full object-cover opacity-30">
+                <div class="absolute inset-0 ar-overlay flex items-center justify-center">
+                    <div class="text-center text-white">
+                        <div class="text-4xl mb-4">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">AR实景导航</h3>
+                        <p class="text-sm opacity-90">通过摄像头实时显示路线指引</p>
+                        <div class="mt-4 flex items-center justify-center space-x-2">
+                            <div class="pulse-ring w-3 h-3 bg-white rounded-full"></div>
+                            <span class="text-sm">正在识别环境...</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- AR指示器 -->
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <div class="w-16 h-16 border-4 border-white rounded-full flex items-center justify-center">
+                        <i class="fas fa-arrow-up text-white text-xl"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">AR实景导航</h3>
+                    <span class="text-sm text-green-600">实时</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">通过增强现实技术，在真实环境中显示导航信息，让您轻松找到目的地。</p>
+                <div class="flex space-x-3">
+                    <button class="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-2 rounded-lg text-sm font-medium">
+                        开始AR导航
+                    </button>
+                    <button class="px-4 py-2 bg-gray-100 text-gray-600 rounded-lg text-sm">
+                        设置
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 语音助手 -->
+        <div class="feature-card">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">智能语音助手</h3>
+                    <div class="voice-wave">
+                        <div class="voice-bar"></div>
+                        <div class="voice-bar"></div>
+                        <div class="voice-bar"></div>
+                        <div class="voice-bar"></div>
+                        <div class="voice-bar"></div>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">通过语音与AI助手对话，支持多语言识别和自然语言理解。</p>
+                
+                <!-- 语音命令示例 -->
+                <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                    <h4 class="text-sm font-medium text-gray-800 mb-2">常用语音命令：</h4>
+                    <div class="space-y-2">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-microphone text-blue-500 text-xs"></i>
+                            <span class="text-sm text-gray-600">"帮我规划去北京的行程"</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-microphone text-blue-500 text-xs"></i>
+                            <span class="text-sm text-gray-600">"附近有什么好吃的餐厅？"</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-microphone text-blue-500 text-xs"></i>
+                            <span class="text-sm text-gray-600">"导航到故宫博物院"</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex space-x-3">
+                    <button class="flex-1 bg-gradient-to-r from-green-500 to-blue-600 text-white py-3 rounded-lg text-sm font-medium flex items-center justify-center space-x-2">
+                        <i class="fas fa-microphone"></i>
+                        <span>按住说话</span>
+                    </button>
+                    <button class="px-4 py-3 bg-gray-100 text-gray-600 rounded-lg text-sm">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 社交分享 -->
+        <div class="feature-card">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">社交分享</h3>
+                    <span class="text-sm text-blue-600">实时</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">与朋友分享您的旅行经历，发现更多精彩目的地。</p>
+                
+                <!-- 分享卡片 -->
+                <div class="bg-gradient-to-r from-pink-100 to-purple-100 rounded-lg p-4 mb-4">
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=60&h=60&fit=crop&crop=center" 
+                             alt="故宫" class="w-12 h-12 rounded-lg object-cover">
+                        <div class="flex-1">
+                            <h4 class="font-medium text-gray-800">故宫博物院打卡</h4>
+                            <p class="text-sm text-gray-600">刚刚在故宫拍了一张美照 📸</p>
+                            <p class="text-xs text-gray-500 mt-1">2分钟前</p>
+                        </div>
+                        <button class="text-blue-500">
+                            <i class="fas fa-share"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 分享平台 -->
+                <div class="grid grid-cols-4 gap-3">
+                    <button class="flex flex-col items-center p-3 bg-green-50 rounded-lg hover:bg-green-100 transition-colors">
+                        <i class="fab fa-weixin text-2xl text-green-600 mb-1"></i>
+                        <span class="text-xs text-gray-600">微信</span>
+                    </button>
+                    <button class="flex flex-col items-center p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
+                        <i class="fab fa-qq text-2xl text-blue-600 mb-1"></i>
+                        <span class="text-xs text-gray-600">QQ</span>
+                    </button>
+                    <button class="flex flex-col items-center p-3 bg-red-50 rounded-lg hover:bg-red-100 transition-colors">
+                        <i class="fab fa-weibo text-2xl text-red-600 mb-1"></i>
+                        <span class="text-xs text-gray-600">微博</span>
+                    </button>
+                    <button class="flex flex-col items-center p-3 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
+                        <i class="fas fa-link text-2xl text-purple-600 mb-1"></i>
+                        <span class="text-xs text-gray-600">链接</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 智能推荐 -->
+        <div class="feature-card">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">AI智能推荐</h3>
+                    <span class="text-sm text-purple-600">个性化</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">基于您的偏好和历史行为，智能推荐最适合的旅行方案。</p>
+                
+                <!-- 推荐标签 -->
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs">历史文化</span>
+                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs">美食探索</span>
+                    <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs">摄影打卡</span>
+                    <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs">购物体验</span>
+                </div>
+
+                <!-- 推荐内容 -->
+                <div class="space-y-3">
+                    <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                        <div class="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-lightbulb text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-medium text-gray-800">基于您的兴趣推荐</h4>
+                            <p class="text-xs text-gray-600">发现更多历史文化景点</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                    <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                        <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-clock text-white"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-medium text-gray-800">最佳游览时间</h4>
+                            <p class="text-xs text-gray-600">避开人流高峰时段</p>
+                        </div>
+                        <i class="fas fa-chevron-right text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 离线功能 -->
+        <div class="feature-card">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">离线功能</h3>
+                    <span class="text-sm text-green-600">已下载</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">下载离线地图和指南，在没有网络的情况下也能正常使用。</p>
+                
+                <!-- 下载进度 -->
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-700">北京离线地图</span>
+                        <span class="text-sm text-green-600">已下载</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-700">故宫语音导览</span>
+                        <span class="text-sm text-green-600">已下载</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-700">交通指南</span>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-16 bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-500 h-2 rounded-full" style="width: 75%"></div>
+                            </div>
+                            <span class="text-sm text-gray-600">75%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="w-full mt-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-lg text-sm font-medium">
+                    管理离线内容
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav flex items-center justify-around px-6">
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-home text-xl mb-1"></i>
+            <span class="text-xs">首页</span>
+        </div>
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-comments text-xl mb-1"></i>
+            <span class="text-xs">对话</span>
+        </div>
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-map text-xl mb-1"></i>
+            <span class="text-xs">地图</span>
+        </div>
+        <div class="nav-item active flex flex-col items-center">
+            <i class="fas fa-user text-xl mb-1"></i>
+            <span class="text-xs">我的</span>
+        </div>
+    </div>
+</body>
+</html> 

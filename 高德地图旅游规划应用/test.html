@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .btn:hover {
+            background: #0056b3;
+        }
+        
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            min-height: 20px;
+        }
+        
+        .success {
+            background: #d4edda;
+            border-color: #c3e6cb;
+            color: #155724;
+        }
+        
+        .error {
+            background: #f8d7da;
+            border-color: #f5c6cb;
+            color: #721c24;
+        }
+        
+        .info {
+            background: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 智能旅游规划助手 - 功能测试</h1>
+    
+    <div class="test-section">
+        <h2>📋 基础功能测试</h2>
+        <p>点击下面的按钮测试各项功能是否正常工作：</p>
+        
+        <button class="btn" onclick="testBasicFunctions()">测试基础功能</button>
+        <button class="btn" onclick="testAPIConnection()">测试API连接</button>
+        <button class="btn" onclick="testMapLoading()">测试地图加载</button>
+        <button class="btn" onclick="clearResults()">清除结果</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>🗺️ 地图功能测试</h2>
+        <div id="map" style="height: 300px; border: 1px solid #ccc; margin: 10px 0;"></div>
+        <button class="btn" onclick="testGeocoding()">测试地理编码</button>
+        <button class="btn" onclick="testPOISearch()">测试POI搜索</button>
+        <button class="btn" onclick="testWeather()">测试天气查询</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>📊 测试结果</h2>
+        <div id="testResults"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔗 快速链接</h2>
+        <a href="index.html" class="btn">返回主应用</a>
+        <a href="launcher.html" class="btn">启动页面</a>
+        <a href="advanced-tools.html" class="btn">高级工具</a>
+    </div>
+
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=ce54301973a263c142c2e5aa8b19ebee&plugin=AMap.Geocoder,AMap.Driving,AMap.Walking,AMap.Transit,AMap.Weather,AMap.PlaceSearch,AMap.Autocomplete"></script>
+    <script>
+        let map;
+        let testResults = [];
+        
+        // 初始化地图
+        function initTestMap() {
+            try {
+                if (typeof AMap !== 'undefined') {
+                    map = new AMap.Map('map', {
+                        zoom: 11,
+                        center: [116.397428, 39.90923]
+                    });
+                    addResult('地图初始化成功', 'success');
+                } else {
+                    addResult('高德地图API未加载', 'error');
+                }
+            } catch (error) {
+                addResult(`地图初始化失败: ${error.message}`, 'error');
+            }
+        }
+        
+        // 添加测试结果
+        function addResult(message, type = 'info') {
+            const resultsDiv = document.getElementById('testResults');
+            const resultDiv = document.createElement('div');
+            resultDiv.className = `result ${type}`;
+            resultDiv.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            resultsDiv.appendChild(resultDiv);
+            testResults.push({message, type, time: new Date()});
+        }
+        
+        // 清除结果
+        function clearResults() {
+            document.getElementById('testResults').innerHTML = '';
+            testResults = [];
+        }
+        
+        // 测试基础功能
+        function testBasicFunctions() {
+            addResult('开始测试基础功能...', 'info');
+            
+            // 测试DOM元素
+            const elements = ['startPoint', 'endPoint', 'poiKeyword', 'weatherCity'];
+            elements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    addResult(`✅ 元素 ${id} 存在`, 'success');
+                } else {
+                    addResult(`❌ 元素 ${id} 不存在`, 'error');
+                }
+            });
+            
+            // 测试按钮
+            const buttons = ['startBtn', 'endBtn', 'routeBtn', 'poiBtn', 'weatherBtn'];
+            buttons.forEach(id => {
+                const button = document.getElementById(id);
+                if (button) {
+                    addResult(`✅ 按钮 ${id} 存在`, 'success');
+                } else {
+                    addResult(`❌ 按钮 ${id} 不存在`, 'error');
+                }
+            });
+            
+            addResult('基础功能测试完成', 'info');
+        }
+        
+        // 测试API连接
+        function testAPIConnection() {
+            addResult('开始测试API连接...', 'info');
+            
+            const API_KEY = 'ce54301973a263c142c2e5aa8b19ebee';
+            
+            // 测试IP定位API
+            fetch(`https://restapi.amap.com/v3/ip?key=${API_KEY}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === '1') {
+                        addResult(`✅ IP定位API正常: ${data.city}`, 'success');
+                    } else {
+                        addResult(`❌ IP定位API失败: ${data.info}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    addResult(`❌ API连接失败: ${error.message}`, 'error');
+                });
+        }
+        
+        // 测试地图加载
+        function testMapLoading() {
+            addResult('开始测试地图加载...', 'info');
+            
+            if (typeof AMap !== 'undefined') {
+                addResult('✅ 高德地图API已加载', 'success');
+                
+                if (map) {
+                    addResult('✅ 地图实例已创建', 'success');
+                } else {
+                    addResult('❌ 地图实例未创建', 'error');
+                }
+            } else {
+                addResult('❌ 高德地图API未加载', 'error');
+            }
+        }
+        
+        // 测试地理编码
+        function testGeocoding() {
+            addResult('开始测试地理编码...', 'info');
+            
+            if (typeof AMap === 'undefined') {
+                addResult('❌ 高德地图API未加载', 'error');
+                return;
+            }
+            
+            try {
+                const geocoder = new AMap.Geocoder();
+                geocoder.getLocation('北京天安门', function(status, result) {
+                    if (status === 'complete' && result.geocodes.length) {
+                        addResult('✅ 地理编码测试成功', 'success');
+                    } else {
+                        addResult('❌ 地理编码测试失败', 'error');
+                    }
+                });
+            } catch (error) {
+                addResult(`❌ 地理编码测试异常: ${error.message}`, 'error');
+            }
+        }
+        
+        // 测试POI搜索
+        function testPOISearch() {
+            addResult('开始测试POI搜索...', 'info');
+            
+            if (typeof AMap === 'undefined') {
+                addResult('❌ 高德地图API未加载', 'error');
+                return;
+            }
+            
+            try {
+                const placeSearch = new AMap.PlaceSearch();
+                placeSearch.search('餐厅', function(status, result) {
+                    if (status === 'complete' && result.poiList.pois.length) {
+                        addResult('✅ POI搜索测试成功', 'success');
+                    } else {
+                        addResult('❌ POI搜索测试失败', 'error');
+                    }
+                });
+            } catch (error) {
+                addResult(`❌ POI搜索测试异常: ${error.message}`, 'error');
+            }
+        }
+        
+        // 测试天气查询
+        function testWeather() {
+            addResult('开始测试天气查询...', 'info');
+            
+            if (typeof AMap === 'undefined') {
+                addResult('❌ 高德地图API未加载', 'error');
+                return;
+            }
+            
+            try {
+                const weather = new AMap.Weather();
+                weather.getLive('北京', function(err, data) {
+                    if (!err) {
+                        addResult('✅ 天气查询测试成功', 'success');
+                    } else {
+                        addResult('❌ 天气查询测试失败', 'error');
+                    }
+                });
+            } catch (error) {
+                addResult(`❌ 天气查询测试异常: ${error.message}`, 'error');
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            addResult('页面加载完成，开始初始化...', 'info');
+            
+            // 延迟初始化地图
+            setTimeout(() => {
+                initTestMap();
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

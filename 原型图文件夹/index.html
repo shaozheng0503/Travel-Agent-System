@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅游Agent助手 - 原型展示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .phone-frame {
+            width: 375px;
+            height: 812px;
+            border-radius: 40px;
+            border: 8px solid #1f2937;
+            background: #000;
+            padding: 8px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            border-radius: 32px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .prototype-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .prototype-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .prototype-title {
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="prototype-grid">
+        <!-- 首页 -->
+        <div class="prototype-item">
+            <h3 class="prototype-title">首页 - 快速入口</h3>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <iframe src="home.html" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- 对话界面 -->
+        <div class="prototype-item">
+            <h3 class="prototype-title">AI对话 - 智能助手</h3>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <iframe src="chat.html" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- 行程规划 -->
+        <div class="prototype-item">
+            <h3 class="prototype-title">行程规划 - 创建行程</h3>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <iframe src="planning.html" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- 地图导航 -->
+        <div class="prototype-item">
+            <h3 class="prototype-title">地图导航 - 路线规划</h3>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <iframe src="map.html" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- 推荐页面 -->
+        <div class="prototype-item">
+            <h3 class="prototype-title">推荐页面 - 景点推荐</h3>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <iframe src="recommendations.html" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- 个人中心 -->
+        <div class="prototype-item">
+            <h3 class="prototype-title">个人中心 - 用户信息</h3>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <iframe src="profile.html" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- 设置页面 -->
+        <div class="prototype-item">
+            <h3 class="prototype-title">设置页面 - 应用设置</h3>
+            <div class="phone-frame">
+                <div class="phone-screen">
+                    <iframe src="settings.html" width="100%" height="100%" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+
+                       <!-- 预算管理 -->
+               <div class="prototype-item">
+                   <h3 class="prototype-title">预算管理 - 费用控制</h3>
+                   <div class="phone-frame">
+                       <div class="phone-screen">
+                           <iframe src="budget.html" width="100%" height="100%" frameborder="0"></iframe>
+                       </div>
+                   </div>
+               </div>
+
+               <!-- 高级功能 -->
+               <div class="prototype-item">
+                   <h3 class="prototype-title">高级功能 - 创新体验</h3>
+                   <div class="phone-frame">
+                       <div class="phone-screen">
+                           <iframe src="advanced-features.html" width="100%" height="100%" frameborder="0"></iframe>
+                       </div>
+                   </div>
+               </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>首页</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .status-bar {
+            height: 44px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .bottom-nav {
+            height: 83px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        .nav-item.active {
+            color: #667eea;
+        }
+        .feature-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        .weather-card {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(116, 185, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar flex items-center justify-between px-6 text-white text-sm">
+        <div class="flex items-center space-x-1">
+            <span>9:41</span>
+        </div>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <i class="fas fa-battery-three-quarters text-xs"></i>
+        </div>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="flex-1 px-6 py-4 space-y-6">
+        <!-- 欢迎区域 -->
+        <div class="text-center">
+            <h1 class="text-2xl font-bold text-gray-800 mb-2">你好，旅行者！</h1>
+            <p class="text-gray-600">今天想去哪里探索呢？</p>
+        </div>
+
+        <!-- 天气卡片 -->
+        <div class="weather-card p-6 text-white">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h3 class="text-lg font-semibold mb-1">北京</h3>
+                    <p class="text-3xl font-bold">22°</p>
+                    <p class="text-sm opacity-90">晴朗 • 适合出行</p>
+                </div>
+                <div class="text-4xl">
+                    <i class="fas fa-sun"></i>
+                </div>
+            </div>
+        </div>
+
+                       <!-- 快速功能 -->
+               <div class="grid grid-cols-2 gap-4">
+                   <div class="feature-card p-6 text-white text-center transform hover:scale-105 transition-transform duration-300 cursor-pointer">
+                       <div class="text-3xl mb-3 animate-pulse">
+                           <i class="fas fa-robot"></i>
+                       </div>
+                       <h3 class="font-semibold mb-1">AI助手</h3>
+                       <p class="text-sm opacity-90">智能规划</p>
+                       <div class="mt-2 text-xs opacity-75">点击开始对话</div>
+                   </div>
+                   <div class="bg-white p-6 rounded-2xl shadow-lg text-center transform hover:scale-105 transition-transform duration-300 cursor-pointer hover:shadow-xl">
+                       <div class="text-3xl mb-3 text-blue-500 animate-bounce">
+                           <i class="fas fa-route"></i>
+                       </div>
+                       <h3 class="font-semibold mb-1 text-gray-800">路线规划</h3>
+                       <p class="text-sm text-gray-600">最优路线</p>
+                       <div class="mt-2 text-xs text-blue-500">实时导航</div>
+                   </div>
+                   <div class="bg-white p-6 rounded-2xl shadow-lg text-center transform hover:scale-105 transition-transform duration-300 cursor-pointer hover:shadow-xl">
+                       <div class="text-3xl mb-3 text-green-500 animate-pulse">
+                           <i class="fas fa-map-marker-alt"></i>
+                       </div>
+                       <h3 class="font-semibold mb-1 text-gray-800">景点推荐</h3>
+                       <p class="text-sm text-gray-600">热门景点</p>
+                       <div class="mt-2 text-xs text-green-500">个性化推荐</div>
+                   </div>
+                   <div class="bg-white p-6 rounded-2xl shadow-lg text-center transform hover:scale-105 transition-transform duration-300 cursor-pointer hover:shadow-xl">
+                       <div class="text-3xl mb-3 text-purple-500 animate-bounce">
+                           <i class="fas fa-wallet"></i>
+                       </div>
+                       <h3 class="font-semibold mb-1 text-gray-800">预算管理</h3>
+                       <p class="text-sm text-gray-600">费用控制</p>
+                       <div class="mt-2 text-xs text-purple-500">智能提醒</div>
+                   </div>
+               </div>
+
+        <!-- 最近行程 -->
+        <div class="bg-white rounded-2xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">最近行程</h3>
+            <div class="space-y-4">
+                <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=60&h=60&fit=crop&crop=center" 
+                         alt="北京" class="w-12 h-12 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-gray-800">北京3日游</h4>
+                        <p class="text-sm text-gray-600">故宫 • 天坛 • 长城</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-600">3天前</p>
+                        <p class="text-xs text-green-600">已完成</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4 p-4 bg-blue-50 rounded-xl">
+                    <img src="https://images.unsplash.com/photo-1536599018102-9f803c140fc1?w=60&h=60&fit=crop&crop=center" 
+                         alt="上海" class="w-12 h-12 rounded-lg object-cover">
+                    <div class="flex-1">
+                        <h4 class="font-semibold text-gray-800">上海周末游</h4>
+                        <p class="text-sm text-gray-600">外滩 • 豫园 • 迪士尼</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-sm text-gray-600">明天</p>
+                        <p class="text-xs text-blue-600">进行中</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 推荐目的地 -->
+        <div class="bg-white rounded-2xl p-6 shadow-lg">
+            <h3 class="text-lg font-semibold text-gray-800 mb-4">推荐目的地</h3>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="relative rounded-xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=150&h=100&fit=crop&crop=center" 
+                         alt="杭州" class="w-full h-24 object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end">
+                        <div class="p-3 text-white">
+                            <h4 class="font-semibold text-sm">杭州</h4>
+                            <p class="text-xs opacity-90">西湖美景</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative rounded-xl overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=150&h=100&fit=crop&crop=center" 
+                         alt="成都" class="w-full h-24 object-cover">
+                    <div class="absolute inset-0 bg-black bg-opacity-30 flex items-end">
+                        <div class="p-3 text-white">
+                            <h4 class="font-semibold text-sm">成都</h4>
+                            <p class="text-xs opacity-90">美食天堂</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav flex items-center justify-around px-6">
+        <div class="nav-item active flex flex-col items-center">
+            <i class="fas fa-home text-xl mb-1"></i>
+            <span class="text-xs">首页</span>
+        </div>
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-comments text-xl mb-1"></i>
+            <span class="text-xs">对话</span>
+        </div>
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-map text-xl mb-1"></i>
+            <span class="text-xs">地图</span>
+        </div>
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-user text-xl mb-1"></i>
+            <span class="text-xs">我的</span>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .status-bar {
+            height: 44px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .bottom-nav {
+            height: 83px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        .nav-item.active {
+            color: #667eea;
+        }
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 0 0 30px 30px;
+        }
+        .menu-item {
+            transition: all 0.3s ease;
+        }
+        .menu-item:hover {
+            background: #f8fafc;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- 状态栏 -->
+    <div class="status-bar flex items-center justify-between px-6 text-white text-sm">
+        <div class="flex items-center space-x-1">
+            <span>9:41</span>
+        </div>
+        <div class="flex items-center space-x-1">
+            <i class="fas fa-signal text-xs"></i>
+            <i class="fas fa-wifi text-xs"></i>
+            <i class="fas fa-battery-three-quarters text-xs"></i>
+        </div>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="flex-1 space-y-6">
+        <!-- 个人信息头部 -->
+        <div class="profile-header px-6 py-8 text-white">
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
+                         alt="用户头像" class="w-20 h-20 rounded-full border-4 border-white shadow-lg">
+                    <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
+                </div>
+                <div class="flex-1">
+                    <h2 class="text-xl font-bold mb-1">张小明</h2>
+                    <p class="text-sm opacity-90 mb-2">旅行爱好者 • 已规划12次行程</p>
+                    <div class="flex items-center space-x-4 text-sm">
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>北京</span>
+                        </div>
+                        <div class="flex items-center space-x-1">
+                            <i class="fas fa-calendar"></i>
+                            <span>2024年加入</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-edit text-white"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- 统计信息 -->
+        <div class="px-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">旅行统计</h3>
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-600 mb-1">12</div>
+                        <p class="text-sm text-gray-600">已完成行程</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-600 mb-1">8</div>
+                        <p class="text-sm text-gray-600">收藏景点</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-purple-600 mb-1">156</div>
+                        <p class="text-sm text-gray-600">旅行天数</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 功能菜单 -->
+        <div class="px-6 space-y-4">
+            <!-- 我的行程 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="menu-item p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-route text-blue-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">我的行程</h4>
+                            <p class="text-sm text-gray-600">查看和管理所有行程</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- 收藏夹 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="menu-item p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-heart text-red-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">收藏夹</h4>
+                            <p class="text-sm text-gray-600">收藏的景点和酒店</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- 旅行记录 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="menu-item p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-history text-green-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">旅行记录</h4>
+                            <p class="text-sm text-gray-600">查看历史旅行足迹</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- 预算管理 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="menu-item p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-wallet text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">预算管理</h4>
+                            <p class="text-sm text-gray-600">费用统计和预算控制</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- 偏好设置 -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="menu-item p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-cog text-yellow-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">偏好设置</h4>
+                            <p class="text-sm text-gray-600">个性化推荐设置</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 最近活动 -->
+        <div class="px-6">
+            <div class="bg-white rounded-2xl p-6 shadow-lg">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">最近活动</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-plus text-blue-600 text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-800">创建了新的行程计划</p>
+                            <p class="text-xs text-gray-500">北京3日游 • 2小时前</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-heart text-green-600 text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-800">收藏了故宫博物院</p>
+                            <p class="text-xs text-gray-500">1天前</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-star text-purple-600 text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-800">完成了上海周末游</p>
+                            <p class="text-xs text-gray-500">3天前</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 其他功能 -->
+        <div class="px-6 space-y-4">
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="menu-item p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-question-circle text-gray-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">帮助与反馈</h4>
+                            <p class="text-sm text-gray-600">使用帮助和意见反馈</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                <div class="menu-item p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-info-circle text-gray-600"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-medium text-gray-800">关于我们</h4>
+                            <p class="text-sm text-gray-600">版本信息和团队介绍</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 退出登录 -->
+        <div class="px-6 pb-6">
+            <button class="w-full bg-red-50 text-red-600 py-4 rounded-2xl font-medium">
+                退出登录
+            </button>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="bottom-nav flex items-center justify-around px-6">
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-home text-xl mb-1"></i>
+            <span class="text-xs">首页</span>
+        </div>
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-comments text-xl mb-1"></i>
+            <span class="text-xs">对话</span>
+        </div>
+        <div class="nav-item flex flex-col items-center text-gray-400">
+            <i class="fas fa-map text-xl mb-1"></i>
+            <span class="text-xs">地图</span>
+        </div>
+        <div class="nav-item active flex flex-col items-center">
+            <i class="fas fa-user text-xl mb-1"></i>
+            <span class="text-xs">我的</span>
+        </div>
+    </div>
+</body>
+</html> 
